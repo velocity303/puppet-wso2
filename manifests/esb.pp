@@ -74,7 +74,7 @@ define wso2::esb (
       # Use default H2 database
     }
     mysql: {
-      include mysql
+      #include mysql
       include mysql::server
       if ! defined (Database[$db_name]) {
         mysql::db { $db_name:
