@@ -138,4 +138,7 @@ define wso2::esb (
     content => template("wso2/${product}/carbon.xml.erb"),
     require => File[$product_dir],
   }
+  file { $logdir:
+    ensure => directory,
+  }
 }
