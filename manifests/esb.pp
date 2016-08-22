@@ -22,6 +22,7 @@ define wso2::esb (
   $user        = $title
   $product     = 'wso2esb'
   $product_dir = "${basedir}/product/${product}-${version}"
+  $source,
 
   include runit
   if ! defined(File["${basedir}/runit/${user}"]) {
@@ -32,10 +33,11 @@ define wso2::esb (
   }
 
   wso2::install { "${user}-${product}":
-    version     => "${product}-${version}",
-    user        => $user,
-    group       => $group,
-    basedir     => $basedir,
+    version => "${product}-${version}",
+    user    => $user,
+    group   => $group,
+    basedir => $basedir,
+    source  => $source,
   }
   file { "${basedir}/product/${product}":
     ensure => link,
