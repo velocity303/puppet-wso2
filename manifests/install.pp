@@ -21,7 +21,7 @@ define wso2::install (
     owner => $user,
     group => $group,
   }
-  remote_file { "wso2-zipfile-${version}":
+  file { "wso2-zipfile-${version}":
     ensure  => present,
     path    => "/root/wso2/${zipfile}",
     mode    => '0444',
@@ -41,7 +41,7 @@ define wso2::install (
     command => "/usr/bin/unzip '/root/wso2/${zipfile}'",
     creates => "${basedir}/product/${subdir}",
     notify  => Exec["wso2-fix-ownership-${version}"],
-    require => [Remote_file["wso2-zipfile-${version}"], File["${basedir}/product"]],
+    require => [File["wso2-zipfile-${version}"], File["${basedir}/product"]],
   }
   file { "${basedir}/product/${subdir}":
     ensure  => directory,
