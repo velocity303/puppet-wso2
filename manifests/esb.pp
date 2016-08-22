@@ -95,7 +95,7 @@ define wso2::esb (
             command     => "/usr/bin/mysql ${db_name} < $product_dir/dbscripts/mysql.sql",
             user        => $user,
             refreshonly => true,
-            require     => Database[$db_name],
+            require     => Mysql::Db[$db_name],
           }
         }
         default: {
