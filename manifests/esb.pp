@@ -18,11 +18,11 @@ define wso2::esb (
   $group        = 'wso2',
   $java_home    = '/usr/java/latest',
   $java_opts    = '',
+  $source,
 ) {
   $user        = $title
   $product     = 'wso2esb'
   $product_dir = "${basedir}/product/${product}-${version}"
-  $source,
 
   include runit
   if ! defined(File["${basedir}/runit/${user}"]) {
