@@ -1,5 +1,8 @@
 class wso2 {
   include '::wso2::config'
+  group { 'wso2':
+    ensure => present,
+  }
 
   file { '/root/wso2':
     ensure => directory,

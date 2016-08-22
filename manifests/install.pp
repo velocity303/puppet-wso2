@@ -21,6 +21,9 @@ define wso2::install (
     owner => $user,
     group => $group,
   }
+  file { $basedir:
+    ensure => directory,
+  }
   file { "wso2-zipfile-${version}":
     ensure  => present,
     path    => "/root/wso2/${zipfile}",
