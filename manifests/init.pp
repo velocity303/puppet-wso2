@@ -21,10 +21,10 @@ class wso2 {
 #  }
 
   # Enterprise Service Bus
-  $esb = hiera_hash('wso2::esb', undef)
-  if $esb {
-    create_resources('wso2::esb', $esb)
-  }
+  #$esb = hiera_hash('wso2::esb', undef)
+  #if $esb {
+  #  create_resources('wso2::esb', $esb)
+  #}
 
 #  # Governance Registry
 #  $greg = hiera_hash('wso2::greg', undef)

@@ -3,6 +3,7 @@ define wso2::install (
   $user,
   $group,
   $basedir,
+  $source,
 ) {
   $zipfile = "${version}.zip"
   $subdir  = $version
@@ -20,11 +21,13 @@ define wso2::install (
     owner => $user,
     group => $group,
   }
-  file { "wso2-zipfile-${version}":
+  remote_file { "wso2-zipfile-${version}":
     ensure  => present,
     path    => "/root/wso2/${zipfile}",
     mode    => '0444',
-    source  => "puppet:///files/wso2/${zipfile}",
+    source  => $source,
+    owner   => $user,
+    group   => $group,
     require => File['/root/wso2'],
   }
   if ! defined(File["${basedir}/product"]) {
