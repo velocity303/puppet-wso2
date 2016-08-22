@@ -69,40 +69,38 @@ define wso2::esb (
   case $db_vendor {
     undef: {
       # Use default H2 database
-    }
-    h2: {
-      # Use default H2 database
-    }
-    mysql: {
-      #include mysql
-      include mysql::server
-      if ! defined (Database[$db_name]) {
-        mysql::db { $db_name:
-          user     => $db_username,
-          password => $db_password,
-          host     => 'localhost',
-          grant    => ['all'],
+      }
+      h2: {
+        # Use default H2 database
         }
-      }
-      file { "${product_dir}/repository/conf/datasources/master-datasources.xml":
-        ensure  => present,
-        owner   => $user,
-        group   => $group,
-        mode    => '0400',
-        content => template("wso2/${product}/master-datasources.xml.erb"),
-        notify  => Exec["${db_name}-dbsetup"],
-        require => File[$product_dir],
-      }
-      exec { "${db_name}-dbsetup":
-        command     => "/usr/bin/mysql ${db_name} < $product_dir/dbscripts/mysql.sql",
-        user        => $user,
-        refreshonly => true,
-        require     => Database[$db_name],
-      }
-    }
-    default: {
-      fail('currently only mysql is supported - please raise a bug on github')
-    }
+        mysql: {
+          #include mysql
+          include mysql::server
+          mysql::db { $db_name:
+            user     => $db_username,
+            password => $db_password,
+            host     => 'localhost',
+            grant    => ['all'],
+          }
+          file { "${product_dir}/repository/conf/datasources/master-datasources.xml":
+            ensure  => present,
+            owner   => $user,
+            group   => $group,
+            mode    => '0400',
+            content => template("wso2/${product}/master-datasources.xml.erb"),
+            notify  => Exec["${db_name}-dbsetup"],
+            require => File[$product_dir],
+          }
+          exec { "${db_name}-dbsetup":
+            command     => "/usr/bin/mysql ${db_name} < $product_dir/dbscripts/mysql.sql",
+            user        => $user,
+            refreshonly => true,
+            require     => Database[$db_name],
+          }
+        }
+        default: {
+          fail('currently only mysql is supported - please raise a bug on github')
+        }
   }
 
   # Config files
