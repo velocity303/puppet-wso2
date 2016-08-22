@@ -82,6 +82,7 @@ define wso2::esb (
             user     => $db_username,
             password => $db_password,
             host     => 'localhost',
+            sql      => "$product_dir/dbscripts/mysql.sql",
             grant    => ['all'],
           }
           file { "${product_dir}/repository/conf/datasources/master-datasources.xml":
@@ -90,15 +91,15 @@ define wso2::esb (
             group   => $group,
             mode    => '0400',
             content => template("wso2/${product}/master-datasources.xml.erb"),
-            notify  => Exec["${db_name}-dbsetup"],
+            # notify  => Exec["${db_name}-dbsetup"],
             require => File[$product_dir],
           }
-          exec { "${db_name}-dbsetup":
-            command     => "/usr/bin/mysql ${db_name} < $product_dir/dbscripts/mysql.sql",
-            user        => $user,
-            refreshonly => true,
-            require     => Mysql::Db[$db_name],
-          }
+          #exec { "${db_name}-dbsetup":
+          #  command     => "/usr/bin/mysql ${db_name} < $product_dir/dbscripts/mysql.sql",
+          #  user        => $user,
+          #  refreshonly => true,
+          #  require     => Mysql::Db[$db_name],
+          #}
         }
         default: {
           fail('currently only mysql is supported - please raise a bug on github')
