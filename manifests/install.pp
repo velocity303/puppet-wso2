@@ -41,7 +41,7 @@ define wso2::install (
     command => "/usr/bin/unzip '/root/wso2/${zipfile}'",
     creates => "${basedir}/product/${subdir}",
     notify  => Exec["wso2-fix-ownership-${version}"],
-    require => Remote_file["wso2-zipfile-${version}", "${basedir}/product"],
+    require => [Remote_file["wso2-zipfile-${version}"], File["${basedir}/product"]],
   }
   file { "${basedir}/product/${subdir}":
     ensure  => directory,
