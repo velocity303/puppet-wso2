@@ -29,7 +29,7 @@ define wso2::user::service  (
     content => template("wso2/${product}/run.erb"),
   }
   exec { 'start app':
-    command => "${basedir}/${product}/run",
+    command => "${basedir}/service/${product}/run",
     path    => ['/bin', '/usr/local/bin', '/usr/bin', '/usr/local/sbin','/sbin','/usr/sbin'],
   }
   # file { "${basedir}/service/${product}":
