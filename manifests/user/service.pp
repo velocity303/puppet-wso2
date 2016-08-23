@@ -18,7 +18,10 @@ define wso2::user::service  (
   #  down        => true,
   #  timestamp   => false,
   #}
-  file { "${basedir}/${product}/run":
+  file { ["${basedir}/service","${basedir}/service/${product}"]:
+    ensure => directory,
+  }
+  file { "${basedir}/service/${product}/run":
     ensure  => present,
     mode    => '0555',
     owner   => $user,
