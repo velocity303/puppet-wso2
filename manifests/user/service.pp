@@ -27,11 +27,13 @@ define wso2::user::service  (
     owner   => $user,
     group   => $group,
     content => template("wso2/${product}/run.erb"),
-  }
+  }->
   exec { 'start app':
-    command  => "${basedir}/service/${product}/run &",
-    path     => ['/bin', '/usr/local/bin', '/usr/bin', '/usr/local/sbin','/sbin','/usr/sbin'],
-    provider => shell,
+    command     => "${basedir}/service/${product}/run &",
+    path        => ['/bin', '/usr/local/bin', '/usr/bin', '/usr/local/sbin','/sbin','/usr/sbin'],
+    provider    => shell,
+    refreshonly => true,
+    require     => Mysql::Db['wso2esb-esb1'],
   }
   # file { "${basedir}/service/${product}":
   #  ensure  => link,
