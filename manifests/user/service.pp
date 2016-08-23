@@ -9,15 +9,15 @@ define wso2::user::service  (
   $java_opts = '',
 ) {
   $installdir = "${basedir}/logscape-${version}"
-  runit::service { "${product}-${user}":
-    service     => $product,
-    basedir     => $basedir,
-    logdir      => $logdir,
-    user        => $user,
-    group       => $group,
-    down        => true,
-    timestamp   => false,
-  }
+  #  runit::service { "${product}-${user}":
+  #  service     => $product,
+  #  basedir     => $basedir,
+  #  logdir      => $logdir,
+  #  user        => $user,
+  #  group       => $group,
+  #  down        => true,
+  #  timestamp   => false,
+  #}
   file { "${basedir}/runit/${product}/run":
     ensure  => present,
     mode    => '0555',
