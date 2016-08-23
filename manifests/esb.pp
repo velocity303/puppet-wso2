@@ -82,7 +82,7 @@ define wso2::esb (
             user     => $db_username,
             password => $db_password,
             host     => 'localhost',
-            sql      => "$product_dir/dbscripts/mysql.sql",
+            sql      => "${product_dir}/dbscripts/mysql.sql",
             grant    => ['all'],
           }
           file { "${product_dir}/repository/conf/datasources/master-datasources.xml":
